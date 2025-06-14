@@ -7,7 +7,7 @@ Welcome to **Beauty AI Recommender** — a smart, elegant, and customer-first AI
 ## 🌐 Live Demo
 
 🔗 [View the Website](https://www.chatbase.co/chatbot-iframe/7kB_J5K147FxHg9iXeYRA)  
-🔗 [Try the AI Chatbot]()
+🔗 [Try the AI Chatbot](https://aura-bot-rho.vercel.app/)
 
 ---
 
