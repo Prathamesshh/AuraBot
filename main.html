@@ -2,79 +2,211 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Beauty Products Recommender</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Beauty AI Recommender</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <style>
     body {
-      background: #fdf2f8;
-      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ffe4ec, #ffffff);
+      color: #3a3a3a;
+      transition: background 0.3s ease-in-out;
     }
+
+    h1 {
+      font-weight: 700;
+      color: #d63384;
+    }
+
     .product-card {
-      transition: transform 0.2s;
+      border: none;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: #fff;
     }
+
     .product-card:hover {
       transform: scale(1.03);
+      box-shadow: 0 12px 30px rgba(255, 105, 180, 0.2);
     }
+
+    .card-img-top {
+      height: 320px;
+      object-fit: cover;
+    }
+
+    .btn-primary {
+      background: #ff4081;
+      border: none;
+      font-weight: 600;
+      border-radius: 50px;
+    }
+
+    .btn-primary:hover {
+      background: #e91e63;
+    }
+
     footer {
       text-align: center;
       padding: 1rem;
-      background-color: #f8d7da;
-      color: #842029;
+      background-color: #fff;
+      color: #d63384;
       font-weight: 500;
-      margin-top: 3rem;
+      margin-top: 4rem;
+      border-top: 1px solid #ffd6e9;
+    }
+
+    #chatbot-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #ff4081;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      font-size: 16px;
+      border-radius: 50px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      z-index: 1000;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #chatbot-container {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      width: 380px;
+      height: 520px;
+      border-radius: 18px;
+      overflow: hidden;
+      display: none;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+      z-index: 999;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-up {
+      animation: fadeInUp 0.6s ease-in-out both;
+    }
+
+    .theme-switch {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1100;
+      background: #fff0f5;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 30px;
+      font-weight: 500;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
+
+    .dark-mode {
+      background: #1f1f2e;
+      color: #eee;
+    }
+
+    .dark-mode h1,
+    .dark-mode footer,
+    .dark-mode .card-text,
+    .dark-mode .btn-primary {
+      color: #f8bbd0;
+    }
+
+    .dark-mode .product-card {
+      background-color: #2e2e3e;
+      box-shadow: 0 12px 30px rgba(255, 105, 180, 0.2);
     }
   </style>
 </head>
 <body>
 
+<button class="theme-switch" onclick="toggleTheme()">Toggle Theme</button>
+
 <div class="container py-5">
-  <h1 class="text-center mb-4">💄 Beauty Products Recommender</h1>
-  <p class="text-center mb-5">Browse popular items and find the perfect product for your needs!</p>
+  <h1 class="text-center mb-4 fade-up">💄 Beauty Products AI Recommender</h1>
+  <p class="text-center mb-5 text-secondary fade-up">Discover your next favorite product in just a click!</p>
+
   <div class="row row-cols-1 row-cols-md-3 g-4">
-    <!-- Product cards -->
+
+    <!-- Product 1 -->
     <div class="col">
       <div class="card product-card h-100">
-        <img src="https://images-static.nykaa.com/media/catalog/product/1/4/14025.jpg" class="card-img-top" alt="Fit Me Foundation">
+        <img src="https://www.maybelline.co.in/-/media/project/loreal/brand-sites/mny/apac/in/products/face/foundation/fitme-matte-and-poreless-foundation/modules/product-info/230-natural-buff/fmt-bottle_230.jpg?rev=881764efe2e84c01bee18f961dec3ec6&cx=0&cy=0&cw=315&ch=472&hash=953BA0BC0E8C536ECEDE2FD7981C4FB3" class="card-img-top" alt="Fit Me Foundation">
         <div class="card-body">
           <h5 class="card-title">Maybelline Fit Me Foundation</h5>
-          <p class="card-text">Makeup - Face | ₹549</p>
-          <a href="https://www.nykaa.com/maybelline-fit-me-foundation/p/14025" class="btn btn-primary" target="_blank">Buy Now</a>
+          <p class="card-text text-muted">Makeup - Face | ₹549</p>
+          <a href="https://www.maybelline.co.in/all-products/face/foundation/fit-me-foundation?variant=Natural-Buff&gad_source=1&gad_campaignid=12570592515&gbraid=0AAAAABfqUQMU6c02kwYRue6_YVQHbsdLL&gclid=Cj0KCQjwu7TCBhCYARIsAM_S3NiXYJtrjPuO6sM0WDE10D8OxgSXlfl_VnQ8JGatzjHRJ_75Y_RkPv8aAtpgEALw_wcB" class="btn btn-primary" target="_blank">Buy Now</a>
         </div>
       </div>
     </div>
 
+    <!-- Product 2 -->
     <div class="col">
       <div class="card product-card h-100">
-        <img src="https://images-static.nykaa.com/media/catalog/product/l/a/lakm00000033_1.jpg" class="card-img-top" alt="Lakme Eyeconic Kajal">
+        <img src="https://m.media-amazon.com/images/I/41C+TXkNSBL._SY300_SX300_.jpg" class="card-img-top" alt="Lakme Eyeconic Kajal">
         <div class="card-body">
           <h5 class="card-title">Lakme Eyeconic Kajal</h5>
-          <p class="card-text">Makeup - Eyes | ₹210</p>
+          <p class="card-text text-muted">Makeup - Eyes | ₹210</p>
           <a href="https://www.nykaa.com/lakme-eyeconic-kajal/p/28417" class="btn btn-primary" target="_blank">Buy Now</a>
         </div>
       </div>
     </div>
 
+    <!-- Product 3 -->
     <div class="col">
       <div class="card product-card h-100">
-        <img src="https://images-static.nykaa.com/media/catalog/product/p/l/plum00000003_1.jpg" class="card-img-top" alt="Plum Green Tea Face Wash">
+        <img src="https://m.media-amazon.com/images/I/51PqeLOWLpL._SX679_.jpg" class="card-img-top" alt="Plum Green Tea Face Wash">
         <div class="card-body">
           <h5 class="card-title">Plum Green Tea Face Wash</h5>
-          <p class="card-text">Skincare - Face | ₹345</p>
-          <a href="https://www.nykaa.com/plum-green-tea-face-wash/p/57486" class="btn btn-primary" target="_blank">Buy Now</a>
+          <p class="card-text text-muted">Skincare - Face | ₹345</p>
+          <a href="https://www.amazon.in/Plum-Cleansing-Enriched-Acne-Prone-Combination/dp/B0BHRDH93X/ref=asc_df_B0BHRDH93X?mcid=7f22af29df6f3391a1a26116d7929160&tag=googleshopdes-21&linkCode=df0&hvadid=710074950845&hvpos=&hvnetw=g&hvrand=151186623174455277&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9146482&hvtargid=pla-1905099653893&gad_source=1&th=1" class="btn btn-primary" target="_blank">Buy Now</a>
         </div>
       </div>
     </div>
 
-    <!-- Add more products as needed -->
-
   </div>
+</div>
+<!-- Chatbot Toggle Button -->
+<button id="chatbot-toggle" onclick="toggleChatbot()"><i class="fas fa-robot"></i> AI Assistant</button>
+
+<!-- Chatbot Iframe Container -->
+<div id="chatbot-container">
+  <iframe
+    src="https://www.chatbase.co/chatbot-iframe/7kB_J5K147FxHg9iXeYRA"
+    width="100%"
+    height="100%"
+    frameborder="0"
+    allow="microphone">
+  </iframe>
 </div>
 
 <footer>
-  &copy; 2025 Beauty Recommender. All rights reserved.
+  &copy; 2025 Beauty AI. Designed with ❤️ for skincare & glam lovers.
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const chatbot = document.getElementById('chatbot-container');
+  function toggleChatbot() {
+    chatbot.style.display = chatbot.style.display === 'none' || chatbot.style.display === '' ? 'block' : 'none';
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle('dark-mode');
+  }
+</script>
+
 </body>
 </html>
